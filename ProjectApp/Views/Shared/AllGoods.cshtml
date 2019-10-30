@@ -1,0 +1,8 @@
+﻿@model ProjectApp.Models.Goods
+
+<div class="col-lg-4">
+    <img class="img-thumbnail" src="@Url.Content("~/img/" + Model.img)" alt="@Url.Content(Model.img)" width="250" height="250"/>
+    <h2>@Model.name</h2>
+    <p>@Model.price.ToString() грн</p>
+    <a class="btn btn-warning" asp-controller="ShopCart" asp-action="AddToCart" asp-route-id="@Model.id">Добавити в корзину</a>
+</div>

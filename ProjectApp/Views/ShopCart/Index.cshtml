@@ -1,0 +1,14 @@
+﻿@model ShopCartViewModel
+<div>
+    @{
+        foreach(var item in Model.shopCart.listShopItems)
+        {
+            <div class="alert alert-warning mt-3">
+                <b>Товар: </b> @item.Goods.name<br />
+                <b>Цена: </b> @item.Goods.price.ToString("C")
+            </div>
+        }
+    }
+    <hr />
+    <a class="btn btn-danger" asp-controller="OrderNoRegister" asp-action="Checkout">Оплатити</a>
+</div>

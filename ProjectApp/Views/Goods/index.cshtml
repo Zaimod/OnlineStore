@@ -1,0 +1,8 @@
+﻿@model GoodsListViewModel
+<div class="row mt-5 mb-2">
+    @{
+        foreach (Goods item in Model.AllGoods){
+            @Html.Partial("AllGoods", item);
+        }
+    }
+</div>

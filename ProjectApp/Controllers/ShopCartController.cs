@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProjectApp.Interfaces;
 using ProjectApp.Models;
@@ -9,6 +10,7 @@ using ProjectApp.ViewsModels;
 
 namespace ProjectApp.Controllers
 {
+    [Authorize]
     public class ShopCartController : Controller
     {
         private readonly IGoods goodsRepository;
@@ -20,15 +22,18 @@ namespace ProjectApp.Controllers
             this.goodsRepository = goodsRepository;
         }
 
-
         public IActionResult Index()
         {
-            var items = shopCart.GetShopItems();
-            shopCart.listShopItems = items;
+            if (User.Identity.IsAuthenticated)
+            {
+                var items = shopCart.GetShopItems();
+                shopCart.listShopItems = items;
 
-            var obj = new ShopCartViewModel { shopCart = shopCart };
+                var obj = new ShopCartViewModel { shopCart = shopCart };
 
-            return View(obj);
+                return View(obj);
+            }
+            return null;
         }
 
         public RedirectToActionResult addToCart(int id)

@@ -8,24 +8,31 @@ namespace ProjectApp.ViewsModels
 {
     public class RegisterModel
     {
-        /*[Required(ErrorMessage = "Вкажіть прізвище")]
-        public string First_name { get; set; }
+        [Required(ErrorMessage = "Не вказане ім'я")]
+        public string first_name { get; set; }
 
-        [Required(ErrorMessage = "Вкажіть ім'я")]
-        public string Last_name { get; set; }
+        [Required(ErrorMessage = "Не вказане прізвище")]
+        public string last_name { get; set; }
 
-        [Required(ErrorMessage = "Вкажіть телефон")]
-        public string Phone { get; set; }
+        [DataType(DataType.PhoneNumber)]
+        [Required(ErrorMessage = "Не вказаний телефон")]
+        public string phone { get; set; }
+
+        /*[DataType(DataType.Date)]
+        [Required(ErrorMessage = "Не вказана дата народження")]
+        public DateTime dateOfBithday { get; set; }
         */
-        [Required(ErrorMessage = "Вкажіть Email")]
+        [Required(ErrorMessage = "Не вказаний Email")]
         public string email { get; set; }
 
-        [Required(ErrorMessage = "Вкажіть пароль")]
+        [Required(ErrorMessage = "Не вказаний пароль")]
         [DataType(DataType.Password)]
         public string password { get; set; }
 
         [DataType(DataType.Password)]
         [Compare("password", ErrorMessage = "Пароль не вірний")]
         public string ConfirmPassword { get; set; }
+
+
     }
 }

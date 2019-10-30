@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProjectApp.Interfaces;
 using ProjectApp.Models;
@@ -19,6 +20,7 @@ namespace ProjectApp.Controllers
             this.goods = goods;
             this.category = category;
         }
+        
         [Route("Goods/List")]
         [Route("Goods/List/{category}")]
         public IActionResult Index(string category)

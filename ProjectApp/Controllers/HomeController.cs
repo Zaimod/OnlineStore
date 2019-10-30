@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using ProjectApp.Models;
 using ProjectApp.Interfaces;
 using ProjectApp.ViewsModels;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace ProjectApp.Controllers
 {
@@ -19,27 +21,23 @@ namespace ProjectApp.Controllers
             //this.shopCart = shopCart;
             this.goodsRepository = goodsRepository;
         }
-
+        [Authorize(Roles = "admin, user")]
         public IActionResult Index()
         {
+            ViewBag.Message = User.FindFirst(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value;
+
             var homegoods = new HomeViewModel { favGoods = goodsRepository.GetFavGoods };
             
             return View(homegoods);
         }
-       /* public HomeController(IGoods goods, ICategory category)
+        
+        /* 
+        [Authorize(Roles = "admin")]
+        public IActionResult About()
         {
-            this.goods = goods;
-            this.category = category;
-        }
+            ViewData["Message"] = "Your application description page.";
 
-
-        public IActionResult Index()
-        {
-            ViewBag.Title = "Товари";
-            GoodsListViewModel obj = new GoodsListViewModel();
-            obj.AllGoods = goods.GetGoods;
-            obj.currCategory = "відюхи";
-            return View("~/Views/Home/Index.cshtml", obj);
+            return View();
         }*/
     }
     

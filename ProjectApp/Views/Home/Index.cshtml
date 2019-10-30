@@ -1,5 +1,6 @@
 ﻿@model HomeViewModel
 <h3>Топ товари</h3>
+<h3>@ViewBag.Message</h3>
 <div class="row mt-5 mb-2">
     @{ 
         foreach (Goods item in Model.favGoods){

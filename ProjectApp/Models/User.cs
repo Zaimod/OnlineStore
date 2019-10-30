@@ -16,10 +16,10 @@ namespace ProjectApp.Models
         public string password { get; set; }
         public string first_name { get; set; }
         public string last_name { get; set; }
-        public string phone { get; set; }
-         
-        public bool isAdmin { get; set; }
-        public int avatar_id { get; set; }
+        public string phone { get; set; }      
+        public int? RoleId { get; set; }
+
+        public Role role { get; set; }
 
         public AvatarUser avatar { get; set; }
 

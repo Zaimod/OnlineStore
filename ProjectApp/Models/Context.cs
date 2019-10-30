@@ -24,11 +24,15 @@ namespace ProjectApp.Models
         public DbSet<ShopCartItem> shopCartItems { get; set; }
         public DbSet<OrderNoRegister> orderNoRegisters { get; set; }
         public DbSet<OrderDetail> orderDetails { get; set; }
+        //Ролі
+        public DbSet<Role> Roles { get; set; }
+
 
         public Context(DbContextOptions<Context> options) : base(options)
         {
             Database.EnsureCreated();
         }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder

@@ -32,11 +32,13 @@ namespace ProjectApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                User user = await context.Users.FirstOrDefaultAsync(u => u.email == model.email && u.password == model.password);
+                User user = await context.Users
+                    .Include(u => u.role)
+                    .FirstOrDefaultAsync(u => u.email == model.email && u.password == model.password);
 
                 if (user != null)
                 {
-                    await Authenticate(model.email); // аутентификация
+                    await Authenticate(user); // аутентификация
 
                     return RedirectToAction("Index", "Home");
                 }
@@ -59,20 +61,23 @@ namespace ProjectApp.Controllers
                 if (user == null)
                 {
                     // добавляем пользователя в бд
-                    context.Users.Add(new User
+                    user = new User
                     {
                         email = model.email,
                         password = model.password,
                         first_name = model.first_name,
                         last_name = model.last_name,
-                        phone = model.phone,
-               
-                        isAdmin = false
-                    }); ;
+                        phone = model.phone
+                    };
+                    Role userRole = await context.Roles.FirstOrDefaultAsync(r => r.Name == "user");
+                    if (userRole != null)
+                        user.role = userRole;
+
+                    context.Users.Add(user);
 
                     await context.SaveChangesAsync();
 
-                    await Authenticate(model.email); // аутентификация
+                    await Authenticate(user); // аутентификация
 
                     return RedirectToAction("Index", "Home");
                 }
@@ -82,23 +87,21 @@ namespace ProjectApp.Controllers
             return View(model);
         }
 
-        private async Task Authenticate(string userName)
+        private async Task Authenticate(User user)
         {
-            // создаем один claim
             var claims = new List<Claim>
             {
-                new Claim(ClaimsIdentity.DefaultNameClaimType, userName)
+                new Claim(ClaimsIdentity.DefaultNameClaimType, user.email),
+                new Claim(ClaimsIdentity.DefaultRoleClaimType, user.role?.Name)
             };
-            // создаем объект ClaimsIdentity
             ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
-            // установка аутентификационных куки
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
         }
 
-        public async Task<IActionResult> Logout()
+        /*public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Login", "Account");
-        }
+        }*/
     }
 }

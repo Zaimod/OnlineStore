@@ -30,7 +30,7 @@ namespace ProjectApp.Models
 
         public Context(DbContextOptions<Context> options) : base(options)
         {
-            Database.EnsureCreated();
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -53,6 +53,7 @@ namespace ProjectApp.Models
                 .WithMany(t => t.Comments)
                 .HasForeignKey(p => p.id_user);
 
+
             modelBuilder
                 .Entity<Comments>()
                 .HasOne(p => p.Goods)
@@ -72,10 +73,10 @@ namespace ProjectApp.Models
                 .HasForeignKey(p => p.id_user);
 
             modelBuilder
-                .Entity<Goods>()
-                .HasOne(p => p.AllDescript)
-                .WithMany(t => t.Goods)
-                .HasForeignKey(p => p.id_allDesc);
+                .Entity<AllDescript>()
+                .HasOne(p => p.Goods)
+                .WithMany(t => t.AllDescript)
+                .HasForeignKey(p => p.id_goods);
 
             modelBuilder
                 .Entity<AllDescript>()
@@ -102,16 +103,16 @@ namespace ProjectApp.Models
                 .HasForeignKey(p => p.id_photo);
 
             modelBuilder
-                .Entity<Goods>()
-                .HasOne(p => p.Discounts)
-                .WithMany(t => t.Goods)
-                .HasForeignKey(p => p.id_discount);
+                .Entity<Discounts>()
+                .HasOne(p => p.Goods)
+                .WithMany(t => t.Discounts)
+                .HasForeignKey(p => p.id_goods);
 
             modelBuilder
-                .Entity<Goods>()
-                .HasOne(p => p.GoodsPhotos)
-                .WithMany(t => t.Goods)
-                .HasForeignKey(p => p.id_img);
+                .Entity<GoodsPhotos>()
+                .HasOne(p => p.Goods)
+                .WithMany(t => t.GoodsPhotos)
+                .HasForeignKey(p => p.id_goods);
         }
     }
 }

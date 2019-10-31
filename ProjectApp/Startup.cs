@@ -42,8 +42,8 @@ namespace ProjectApp
                 options.LoginPath = new PathString("/Account/Login");
                 options.AccessDeniedPath = new PathString("/Account/Login");
             });
-            /*
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            
+            /*services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {
                 options.RequireHttpsMetadata = false;
                 options.TokenValidationParameters = new TokenValidationParameters
@@ -81,11 +81,18 @@ namespace ProjectApp
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseHsts();
             }
+            app.UseHttpsRedirection();
+            app.UseDefaultFiles();
             app.UseSession();
             app.UseStaticFiles();
             app.UseAuthentication();
+
+            app.UseWebpackDevMiddleware(new Microsoft.AspNetCore.SpaServices.Webpack.WebpackDevMiddlewareOptions
+            {
+                HotModuleReplacement = true
+            });
 
             app.UseMvc(routes =>
             {

@@ -11,7 +11,8 @@ namespace ProjectApp.Models
         [Key]
         public int id { get; set; }     
 
-        public List<Goods> Goods { get; set; }
+        public int id_goods { get; set; }
+        public Goods Goods { get; set; }
         [Required]
         public int id_longDesc { get; set; }
         public longDesc longDesc { get; set; }

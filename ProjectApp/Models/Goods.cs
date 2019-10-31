@@ -22,17 +22,15 @@ namespace ProjectApp.Models
         public List<Comments> UsersComment { get; set; }
         public List<SelectedProd> selectedProds { get; set; }
 
-        public int id_allDesc { get; set; }
-        public AllDescript AllDescript { get; set; }
+        public List<AllDescript> AllDescript { get; set; }
 
         public int id_category { get; set;  }
         public Category Category { get; set; }
 
-        public int id_discount { get; set; }
-        public Discounts Discounts { get; set; }
+        public List<Discounts> Discounts { get; set; }
 
         public int id_img { get; set; }
-        public GoodsPhotos GoodsPhotos { get; set; }
+        public List<GoodsPhotos> GoodsPhotos { get; set; }
 
         public string img { get; set; }
     }

@@ -15,6 +15,6 @@ namespace ProjectApp.Models
 
         public int id_goods { get; set; }
 
-        public List<Goods> Goods { get; set; }
+        public Goods Goods { get; set; }
     }
 }

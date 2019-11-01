@@ -15,8 +15,13 @@ namespace ProjectApp.Repository
         {
             this.context = context;
         }
+
         public IEnumerable<Goods> GetGoods => context.Goods.Include(i => i.Category);
-        public IEnumerable<Goods> GetFavGoods => context.Goods.Where(p => p.isFavourite).Include(i =>i.Category);
+
+        public IEnumerable<Goods> GetFavGoods => context.Goods.Where(p => p.isFavourite).Include(i => i.Category);
+
+        //public IEnumerable<Goods> GetGoods => context.Goods.Include((System.Linq.Expressions.Expression<Func<Goods, Category>>)(i => i.Category));
+        //public IEnumerable<Goods> GetFavGoods => context.Goods.Where(p => p.isFavourite).Include((System.Linq.Expressions.Expression<Func<Goods, Category>>)(i => (Category)i.Category));
 
         public Goods GetObjectGoods(int item) => context.Goods.FirstOrDefault(p => p.id == item);
     }

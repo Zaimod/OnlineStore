@@ -9,9 +9,9 @@ using ProjectApp.Models;
 
 namespace ProjectApp.Controllers
 {
-    [Route("api/[products]")]
-    [ApiController]
-    public class GoodsCRUDController : ControllerBase
+    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "admin, user")]
+    [Route("api/products")]
+    public class GoodsCRUDController : Controller
     {
         private readonly Context context;
 

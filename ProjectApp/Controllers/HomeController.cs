@@ -21,16 +21,16 @@ namespace ProjectApp.Controllers
             //this.shopCart = shopCart;
             this.goodsRepository = goodsRepository;
         }
+        [Route("Home/Top")]
         [Authorize(Roles = "admin, user")]
         public IActionResult Index()
         {
             ViewBag.Message = User.FindFirst(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value;
 
             var homegoods = new HomeViewModel { favGoods = goodsRepository.GetFavGoods };
-            
+
             return View(homegoods);
         }
-        
         /* 
         [Authorize(Roles = "admin")]
         public IActionResult About()

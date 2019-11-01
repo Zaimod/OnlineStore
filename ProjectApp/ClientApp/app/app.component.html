@@ -1,0 +1,71 @@
+﻿<h1>Список товарів</h1>
+
+<input type="button" value="Добавити" class="btn btn-default" (click)="add()" />
+<table *ngIf="tableMode; else create" class="table table-striped">
+    <thead>
+        <tr>
+            <td>Товар</td>
+            <td>Ціна</td>
+            <td>Топ товар</td>
+            <td>В наявності</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let p of goodsArr">
+            <ng-template [ngIf]="goods?.id != p.id" [ngIfElse]="edit">
+                <td>{{p?.name}}</td>
+                <td>{{p?.price}}</td>
+                <td>{{p?.isFavourite}}</td>
+                <td>{{p?.isAvailable}}</td>
+                <td>
+                    <button class="btn btn-sm btn-primary" (click)="editProduct(p)">Змінити</button>
+                    <button class="btn btn-sm btn-danger" (click)="delete(p)">Видалити</button>
+                </td>
+            </ng-template>
+        </tr>
+    </tbody>
+</table>
+
+<!--шаблон для редактирования-->
+<ng-template #edit>
+    <td>
+        <input type="text" [(ngModel)]="goods.name" class="form-control" />
+    </td>
+    <td>
+        <input type="text" [(ngModel)]="goods.price" class="form-control" />
+    </td>
+    <td>
+        <input type="checkbox" [(ngModel)]="goods.isFavourite" class="form-control" />
+    </td>
+    <td>
+        <input type="checkbox" [(ngModel)]="goods.isAvailable" class="form-control" />
+    </td>
+    <td>
+        <input type="button" value="Зберегти" (click)="save()" class="btn btn-sm btn-success" />
+        <input type="button" value="Відмінити" (click)="cancel()" class="btn btn-sm btn-warning" />
+    </td>
+</ng-template>
+
+<!--шаблон для добавления-->
+<ng-template #create>
+    <div class="form-group">
+        <label>Товар</label>
+        <input type="text" [(ngModel)]="goods.name" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Ціна</label>
+        <input type="text" [(ngModel)]="goods.price" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Топ товар</label>
+        <input type="checkbox" [(ngModel)]="goods.isFavourite" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>В наявності</label>
+        <input type="checkbox" [(ngModel)]="goods.isAvailable" class="form-control" />
+    </div>
+    <div>
+        <input type="button" value="Зберегти" (click)="save()" class="btn btn-success" />
+        <input type="button" value="Відмінити" (click)="cancel()" class="btn btn-warning" />
+    </div>
+</ng-template>

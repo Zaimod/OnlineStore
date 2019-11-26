@@ -1,6 +1,8 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { DataService } from './data.service';
-import { Goods } from './goods';
+import { Goods} from './goods';
+
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
     selector: 'app',
@@ -15,7 +17,7 @@ export class AppComponent implements OnInit {
     goodsArr: Goods[];                // массив товаров
     tableMode: boolean = true;          // табличный режим
 
- 
+     
     
     constructor(private dataService: DataService) { }
 
@@ -26,6 +28,7 @@ export class AppComponent implements OnInit {
     loadProducts() {
         this.dataService.getProducts()
             .subscribe((data: Goods[]) => this.goodsArr = data);
+       
     }
     // сохранение данных
     save() {
@@ -33,6 +36,7 @@ export class AppComponent implements OnInit {
         {
             this.dataService.createProduct(this.goods)
                 .subscribe((data: Goods) => this.goodsArr.push(data));
+                
         }
         else
         {

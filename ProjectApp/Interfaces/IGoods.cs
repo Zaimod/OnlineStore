@@ -10,6 +10,8 @@ namespace ProjectApp.Interfaces
     {
         IEnumerable<Goods> GetGoods { get; }
         IEnumerable<Goods> GetFavGoods { get; }
+
+        IQueryable<Goods> GetGoods1 { get; }
         Goods GetObjectGoods(int item);
     }
 }

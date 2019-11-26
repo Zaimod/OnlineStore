@@ -136,6 +136,24 @@ namespace ProjectApp.Migrations
                     b.ToTable("Comments");
                 });
 
+            modelBuilder.Entity("ProjectApp.Models.Description", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("desc");
+
+                    b.Property<int>("id_goods");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("id_goods")
+                        .IsUnique();
+
+                    b.ToTable("Descriptions");
+                });
+
             modelBuilder.Entity("ProjectApp.Models.Discounts", b =>
                 {
                     b.Property<int>("id")
@@ -153,6 +171,52 @@ namespace ProjectApp.Migrations
                     b.HasIndex("id_goods");
 
                     b.ToTable("Discounts");
+                });
+
+            modelBuilder.Entity("ProjectApp.Models.FullDescription_Video", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<double>("Chastota_proc");
+
+                    b.Property<double>("Chastota_video");
+
+                    b.Property<string>("Graph_chipset");
+
+                    b.Property<string>("Maker");
+
+                    b.Property<double>("Obsyag_Videopamyati");
+
+                    b.Property<string>("Pruznachennia");
+
+                    b.Property<double>("Rozrydnisct");
+
+                    b.Property<bool>("Stan");
+
+                    b.Property<string>("Tip_Videopamyati");
+
+                    b.Property<string>("Tip_pidkluchenna");
+
+                    b.Property<bool>("display_port");
+
+                    b.Property<bool>("dvi");
+
+                    b.Property<bool>("hdmi");
+
+                    b.Property<int>("id_goods");
+
+                    b.Property<double>("length");
+
+                    b.Property<bool>("vga");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("id_goods")
+                        .IsUnique();
+
+                    b.ToTable("FullDescription_Video");
                 });
 
             modelBuilder.Entity("ProjectApp.Models.Goods", b =>
@@ -415,11 +479,27 @@ namespace ProjectApp.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("ProjectApp.Models.Description", b =>
+                {
+                    b.HasOne("ProjectApp.Models.Goods", "Goods")
+                        .WithOne("Descriptions")
+                        .HasForeignKey("ProjectApp.Models.Description", "id_goods")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("ProjectApp.Models.Discounts", b =>
                 {
                     b.HasOne("ProjectApp.Models.Goods", "Goods")
                         .WithMany("Discounts")
                         .HasForeignKey("id_goods")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("ProjectApp.Models.FullDescription_Video", b =>
+                {
+                    b.HasOne("ProjectApp.Models.Goods", "Goods")
+                        .WithOne("FullDescription_video")
+                        .HasForeignKey("ProjectApp.Models.FullDescription_Video", "id_goods")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

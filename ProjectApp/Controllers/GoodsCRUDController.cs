@@ -9,7 +9,7 @@ using ProjectApp.Models;
 
 namespace ProjectApp.Controllers
 {
-    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "admin, user")]
+ 
     [Route("api/products")]
     public class GoodsCRUDController : Controller
     {

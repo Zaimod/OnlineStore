@@ -27,7 +27,13 @@ namespace ProjectApp.Models
         //Ролі
         public DbSet<Role> Roles { get; set; }
 
+        public DbSet<Description> Descriptions { get; set; }
+        public DbSet<FullDescription_Video> FullDescription_Video { get; set; }
 
+        public Context()
+        {
+
+        }
         public Context(DbContextOptions<Context> options) : base(options)
         {
 
@@ -77,6 +83,21 @@ namespace ProjectApp.Models
                 .HasOne(p => p.Goods)
                 .WithMany(t => t.AllDescript)
                 .HasForeignKey(p => p.id_goods);
+
+            //Опис
+            modelBuilder
+                .Entity<Goods>()
+                .HasOne(p => p.Descriptions)
+                .WithOne(t => t.Goods)
+                .HasForeignKey<Description>(p => p.id_goods);
+
+            //Хар-ки
+            modelBuilder
+               .Entity<Goods>()
+               .HasOne(p => p.FullDescription_video)
+               .WithOne(t => t.Goods)
+               .HasForeignKey<FullDescription_Video>(p => p.id_goods);
+
 
             modelBuilder
                 .Entity<AllDescript>()

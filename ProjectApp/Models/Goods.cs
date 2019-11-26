@@ -23,7 +23,8 @@ namespace ProjectApp.Models
         public List<SelectedProd> selectedProds { get; set; }
 
         public List<AllDescript> AllDescript { get; set; }
-
+        public Description Descriptions { get; set; }
+        public FullDescription_Video FullDescription_video { get; set; }
         public int id_category { get; set;  }
         public Category Category { get; set; }
 

@@ -17,6 +17,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.SpaServices.Webpack;
 
 namespace ProjectApp
 {
@@ -33,6 +34,7 @@ namespace ProjectApp
             services.AddTransient<ICategory, CategoryRepository>();
             services.AddTransient<IGoods, GoodsRepository>();
             services.AddTransient<IOrders, OrderRepository>();
+            services.AddTransient<IDescription, DescriptionRepository>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped(sp => ShopCart.GetCart(sp));
 
@@ -88,16 +90,17 @@ namespace ProjectApp
             app.UseSession();
             app.UseStaticFiles();
             app.UseAuthentication();
-
-            app.UseWebpackDevMiddleware(new Microsoft.AspNetCore.SpaServices.Webpack.WebpackDevMiddlewareOptions
+            app.UseDeveloperExceptionPage();
+            app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
             {
                 HotModuleReplacement = true
             });
 
             app.UseMvc(routes =>
             {
-                routes.MapRoute(name: "default", template: "{controller=Home}/{action=Index}/{id?}");
+                routes.MapRoute(name: "default", template: "{controller=Home}/{action=Index}");
                 routes.MapRoute(name: "categoryFilter", template: "{Goods}/{action}/{category?}");
+               
             });
 
             

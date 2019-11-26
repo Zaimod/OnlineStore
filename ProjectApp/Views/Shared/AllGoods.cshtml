@@ -1,8 +1,20 @@
 ﻿@model ProjectApp.Models.Goods
 
-<div class="col-lg-4">
-    <img class="img-thumbnail" src="@Url.Content("~/img/" + Model.img)" alt="@Url.Content(Model.img)" width="250" height="250"/>
-    <h2>@Model.name</h2>
-    <p>@Model.price.ToString() грн</p>
-    <a class="btn btn-warning" asp-controller="ShopCart" asp-action="AddToCart" asp-route-id="@Model.id">Добавити в корзину</a>
-</div>
+    <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card h-100 rounded">
+            @ViewBag.gt
+            <a asp-controller="Item/" asp-action="Index" asp-route-name="@Model.name"><img class="card-img-top" src="@Url.Content("~/img/" + Model.img)" height="150" /></a>
+            <div class="card-body">
+                <h4 class="card-title">
+                    <a asp-controller="Item/" asp-action="Index" asp-route-name="@Model.name">@Model.name</a>
+                </h4>
+
+
+                <h5>@Model.price.ToString() грн</h5>
+                <p class="card-text">Lorem Ipsum!</p>
+                <a class="btn btn-primary d-flex justify-content-center" role="button" asp-controller="Item/" asp-action="Index" asp-route-name="@Model.name">Детальніше</a>
+                <a class="btn btn-secondary d-flex justify-content-center" role="button" asp-controller="ShopCart" asp-action="AddToCart" asp-route-id="@Model.id">Добавити в кошик</a>
+
+            </div>
+        </div>
+    </div>

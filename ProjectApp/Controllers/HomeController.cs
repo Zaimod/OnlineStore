@@ -26,7 +26,7 @@ namespace ProjectApp.Controllers
         public IActionResult Index()
         {
             ViewBag.Message = User.FindFirst(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value;
-
+            ViewBag.Title = "Головна";
             var homegoods = new HomeViewModel { favGoods = goodsRepository.GetFavGoods };
 
             return View(homegoods);

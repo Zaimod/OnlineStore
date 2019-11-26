@@ -4,10 +4,12 @@
 <table *ngIf="tableMode; else create" class="table table-striped">
     <thead>
         <tr>
-            <td>Товар</td>
+            <td>Товар1</td>
             <td>Ціна</td>
             <td>Топ товар</td>
             <td>В наявності</td>
+            <td>Категорія</td>
+            <td>Фото</td>
         </tr>
     </thead>
     <tbody>
@@ -17,15 +19,19 @@
                 <td>{{p?.price}}</td>
                 <td>{{p?.isFavourite}}</td>
                 <td>{{p?.isAvailable}}</td>
+                <td *ngIf="p?.id_category == 2">Відеокарта</td>
+                <td *ngIf="p?.id_category == 3">Процесор</td>
+                <td>{{p?.img}}</td>
                 <td>
                     <button class="btn btn-sm btn-primary" (click)="editProduct(p)">Змінити</button>
                     <button class="btn btn-sm btn-danger" (click)="delete(p)">Видалити</button>
                 </td>
             </ng-template>
         </tr>
+        
     </tbody>
+    
 </table>
-
 <!--шаблон для редактирования-->
 <ng-template #edit>
     <td>
@@ -39,6 +45,17 @@
     </td>
     <td>
         <input type="checkbox" [(ngModel)]="goods.isAvailable" class="form-control" />
+    </td>
+    <td>
+        <br />
+        <span>Відеокарта</span>
+        <input type="radio" value="2" [(ngModel)]="goods.id_category" class="form-control" />
+        <span>Процесор</span>
+        <input type="radio" value="3" [(ngModel)]="goods.id_category" class="form-control" />
+    </td>
+    <td>
+        <input type="file" name="photo" accept="image/*" [(ngModel)]="goods.img" class="form-control"/>
+        
     </td>
     <td>
         <input type="button" value="Зберегти" (click)="save()" class="btn btn-sm btn-success" />
@@ -63,6 +80,13 @@
     <div class="form-group">
         <label>В наявності</label>
         <input type="checkbox" [(ngModel)]="goods.isAvailable" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Категорія</label><br />
+        <span>Відеокарта</span>
+        <input type="radio" name="categ" value="2" [(ngModel)]="goods.id_category" class="form-control" />
+        <span>Процесор</span>
+        <input type="radio" name="categ" value="3" [(ngModel)]="goods.id_category" class="form-control" />
     </div>
     <div>
         <input type="button" value="Зберегти" (click)="save()" class="btn btn-success" />

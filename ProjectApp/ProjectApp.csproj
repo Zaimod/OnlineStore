@@ -5,23 +5,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="ClientApp\app.components.ts" />
-    <None Remove="ClientApp\app\app.component.ts" />
-    <None Remove="ClientApp\app\app.module.ts" />
-    <None Remove="ClientApp\app\data.service.ts" />
-    <None Remove="ClientApp\app\goods.ts" />
-    <None Remove="ClientApp\main.ts" />
-    <None Remove="ClientApp\polyfills.ts" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\css\" />
-    <Folder Include="wwwroot\img\" />
     <Folder Include="wwwroot\js\" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\dist\app.js" />
+    <None Include="wwwroot\dist\polyfills.js" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Abstractions" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Extensions" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
@@ -37,10 +31,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <TypeScriptCompile Include="ClientApp\app\app.component.ts" />
-    <TypeScriptCompile Include="ClientApp\app\app.module.ts" />
-    <TypeScriptCompile Include="ClientApp\main.ts" />
-    <TypeScriptCompile Include="ClientApp\polyfills.ts" />
+    <ProjectReference Include="..\ProjectApp.DAL\ProjectApp.DAL.csproj" />
   </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties tsconfig_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>

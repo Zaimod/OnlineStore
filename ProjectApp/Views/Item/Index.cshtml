@@ -1,0 +1,11 @@
+﻿@model ItemView
+@{
+    Layout = "_ItemLayout";
+}
+@{
+  
+    foreach (Goods item in Model.Items)
+    {
+        @Html.Partial("ItemObj", item);
+    }
+}

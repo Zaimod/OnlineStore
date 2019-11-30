@@ -21,9 +21,9 @@ namespace ProjectApp.Controllers
             this.context = context;
         }
         [HttpGet]
-        public IActionResult Login()
+        public IActionResult Login(string returnUrl = null)
         {
-            return View();
+            return View(new LoginModel { ReturnUrl = returnUrl });
         }
 
         [HttpPost]
@@ -36,11 +36,16 @@ namespace ProjectApp.Controllers
                     .Include(u => u.role)
                     .FirstOrDefaultAsync(u => u.email == model.email && u.password == model.password);
 
-                if (user != null)
+
+                if(!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
+                {
+                    return Redirect(model.ReturnUrl);
+                }
+                else if (user != null)
                 {
                     await Authenticate(user); // аутентификация
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Goods");
                 }
                 ModelState.AddModelError("", "Некорректные логин и(или) пароль");
             }
@@ -63,11 +68,9 @@ namespace ProjectApp.Controllers
                     // добавляем пользователя в бд
                     user = new User
                     {
-                        email = model.email,
-                        password = model.password,
                         first_name = model.first_name,
-                        last_name = model.last_name,
-                        phone = model.phone
+                        email = model.email,
+                        password = model.password
                     };
                     Role userRole = await context.Roles.FirstOrDefaultAsync(r => r.Name == "user");
                     if (userRole != null)
@@ -79,7 +82,9 @@ namespace ProjectApp.Controllers
 
                     await Authenticate(user); // аутентификация
 
-                    return RedirectToAction("Index", "Home");
+                    
+
+                    return RedirectToAction("Index", "Goods");
                 }
                 else
                     ModelState.AddModelError("", "Некорректные логин и(или) пароль");
@@ -98,6 +103,15 @@ namespace ProjectApp.Controllers
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> LogOff()
+        {
+            
+            // удаляем аутентификационные куки
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Index", "Goods");
+        }
         /*public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);

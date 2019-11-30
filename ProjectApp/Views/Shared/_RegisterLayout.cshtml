@@ -1,0 +1,78 @@
+﻿@model RegisterModel
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Форма Реєстрації</title>
+    <link href="~/css/Register.css" rel="stylesheet" type="text/css" />
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/css/jquery.slim.min.js"></script>
+    <script src="~/css/bootstrap.bundle.min.js"></script>
+    <div class="container">
+        <form  asp-controller="Goods" asp-action="index">
+            <button class="btn btn-lg btn-primary btn-block text-uppercase col-lg-10 col-xl-9 mx-auto" style="color: white;" type="submit">Назад</button>
+        </form>
+        <div class="row">
+            <div class="col-lg-10 col-xl-9 mx-auto">
+                <div class="card card-signin flex-row my-5">
+                    <div class="card-img-left d-none d-md-flex">
+                        <!-- Background image for card set in CSS! -->
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Реєстрація</h5>
+                        <form method="post" asp-controller="Account" asp-action="Register" asp-anti-forgery="true" class="form-signin">
+                            <div class="validation" asp-validation-summary="ModelOnly" />
+                            <div class="form-label-group">
+                                <input asp-for="first_name" type="text" id="inputUsername" class="form-control" placeholder="Username" required="" autofocus="">
+                                <label asp-for="first_name" for="inputUsername">Ім'я</label>
+                                <span  class="badge badge-warning" asp-validation-for="first_name"></span>
+                            </div>
+                            <div class="form-label-group">
+                                <input asp-for="last_name" type="text" id="inputSurname" class="form-control" placeholder="Surname" required="" autofocus="">
+                                <label asp-for="last_name" for="inputSurname">Прізвище</label>
+                                <span class="badge badge-warning" asp-validation-for="last_name"></span>
+                            </div>
+                            <div class="form-label-group">
+                                <input asp-for="phone" type="text" id="inputphone" class="form-control" placeholder="Phone" required="" autofocus="">
+                                <label asp-for="phone" for="inputphone">Номер телефону</label>
+                                <span class="badge badge-warning" asp-validation-for="phone"></span>
+                            </div>
+                            <div class="form-label-group">
+                                <input asp-for="email" type="email" id="inputEmail" class="form-control" placeholder="Email address" required="">
+                                <label asp-for="email" for="inputEmail">Електронна пошта</label>
+                                <span class="badge badge-warning" asp-validation-for="email"></span>
+                            </div>
+
+                            <hr>
+
+                            <div class="form-label-group">
+                                <input asp-for="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
+                                <label asp-for="password" for="inputPassword">Пароль</label>
+                                <span class="badge badge-warning" asp-validation-for="password"></span>
+                            </div>
+
+                            <div class="form-label-group">
+                                <input asp-for="ConfirmPassword" type="password" id="inputConfirmPassword" class="form-control" placeholder="Password" required="">
+                                <label asp-for="ConfirmPassword" for="inputConfirmPassword">Підтвердити пароль</label>
+                                <span class="badge badge-warning" asp-validation-for="ConfirmPassword"></span>
+                            </div>
+                            <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Реєстрація</button>
+                            <a class="d-block text-center mt-2 small" asp-controller="Account" asp-action="Login">Увійти</a>
+                            <hr class="my-4">
+                            <button class="btn btn-lg btn-block text-uppercase" style="color: white; background-color: #ea4335" type="submit"><i class="fab fa-google mr-2"></i>Увійти через Google</button>
+                            <button class="btn btn-lg btn-block text-uppercase" style="color: white; background-color: #3b5998" type="submit"><i class="fab fa-facebook-f mr-2"></i>Увійти через Facebook</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @RenderBody()
+</body>
+</html>

@@ -8,12 +8,18 @@ namespace ProjectApp.ViewsModels
 {
     public class LoginModel
     {
-        [Required(ErrorMessage = "Не вказаний Email")]
+        [Required]
+        [Display(Name = "Email")]
         public string email { get; set; }
 
-        [Required(ErrorMessage = "Не вказаний пароль")]
+        [Required]
         [DataType(DataType.Password)]
+        [Display(Name = "Пароль")]
         public string password { get; set; }
 
+        [Display(Name = "Запомнить?")]
+        public bool RememberMe { get; set; }
+
+        public string ReturnUrl { get; set; }
     }
 }

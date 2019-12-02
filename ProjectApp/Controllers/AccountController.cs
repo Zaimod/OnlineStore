@@ -47,7 +47,7 @@ namespace ProjectApp.Controllers
 
                     return RedirectToAction("Index", "Goods");
                 }
-                ModelState.AddModelError("", "Некорректные логин и(или) пароль");
+                ModelState.AddModelError("", "Неправильний email або пароль!");
             }
             return View(model);
         }
@@ -87,7 +87,7 @@ namespace ProjectApp.Controllers
                     return RedirectToAction("Index", "Goods");
                 }
                 else
-                    ModelState.AddModelError("", "Некорректные логин и(или) пароль");
+                    ModelState.AddModelError("", "Неправильний email чи пароль!");
             }
             return View(model);
         }

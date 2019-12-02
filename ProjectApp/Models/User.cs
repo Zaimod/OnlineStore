@@ -19,6 +19,7 @@ namespace ProjectApp.Models
         public string phone { get; set; }      
         public int? RoleId { get; set; }
 
+        public DateTime RegisterTime { get; set; }
         public Role role { get; set; }
 
         public AvatarUser avatar { get; set; }
@@ -28,5 +29,6 @@ namespace ProjectApp.Models
         public List<Comments> Comments { get; set; }
         public List<SelectedProd> selectedProds { get; set; }
         
+        public List<OrderDetailRegister> orderDetailsRegisters { get; set; }
     }
 }

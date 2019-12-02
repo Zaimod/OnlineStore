@@ -35,14 +35,19 @@ namespace ProjectApp.Controllers
             }
             return null;
         }
+        public IActionResult test()
+        {
+            return View();
+        }
 
-        public RedirectToActionResult addToCart(int id)
+        public IActionResult addToCart(int id)
         {
             var item = goodsRepository.GetGoods.FirstOrDefault(i => i.id == id);
 
             if (item != null)
                 shopCart.AddToCart(item);
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Goods/List/{category}");
         }
+
     }
 }

@@ -13,5 +13,6 @@ namespace ProjectApp.Interfaces
 
         IQueryable<Goods> GetGoods1 { get; }
         Goods GetObjectGoods(int item);
+        
     }
 }

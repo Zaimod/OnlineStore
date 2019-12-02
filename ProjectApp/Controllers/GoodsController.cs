@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProjectApp.Interfaces;
 using ProjectApp.Models;
+using ProjectApp.Repository.UnitOfWork;
 using ProjectApp.ViewsModels;
  
 
@@ -13,73 +14,70 @@ namespace ProjectApp.Controllers
 {
     public class GoodsController : Controller
     {
-        private readonly IGoods goods;
-        private readonly ICategory category;
+      
+        UnitOfWork unitOfWork;
         
-        public GoodsController(IGoods goods, ICategory category)
+        public GoodsController(Context context)
         {
-            this.goods = goods;
-            this.category = category;
+            unitOfWork = new UnitOfWork(context);
         }
 
         [Route("Goods/List")]
         [Route("Goods/List/{category}")]
         public IActionResult Index(string category, string sort)
         {
-            string _category = category;
-            IEnumerable<Goods> goods = null;
-            string currCategory = "";
+
+            IQueryable<Goods> goods = unitOfWork.Goods.GetGoods1;
 
             if (string.IsNullOrEmpty(category))
             {
-                if (sort == "priceUP")
-                    goods = this.goods.GetGoods.OrderBy(i => i.price);
-                else if (sort == "priceDown")
-                    goods = this.goods.GetGoods.OrderByDescending(i => i.price);
-                else
-                    goods = this.goods.GetGoods.OrderBy(i => i.id);
+                goods = unitOfWork.Goods.GetGoods1;
             }
             else
             {
                 if (string.Equals("Відеокарти", category, StringComparison.OrdinalIgnoreCase))
                 {
-                    if (sort == "priceUP")
-                        goods = this.goods.GetGoods.Where(i => i.Category.Name.Equals("Відеокарти")).OrderBy(i => i.price);
-                    else if (sort == "priceDown")
-                        goods = this.goods.GetGoods.Where(i => i.Category.Name.Equals("Відеокарти")).OrderByDescending(i => i.price);
-                    else
-                        goods = this.goods.GetGoods.Where(i => i.Category.Name.Equals("Відеокарти")).OrderBy(i => i.id);
+                    goods = unitOfWork.Goods.GetGoods1.Where(i => i.Category.id == 2);
+
                 }
                 if (string.Equals("Процесори", category, StringComparison.OrdinalIgnoreCase))
                 {
-                    if (sort == "priceUP")
-                        goods = this.goods.GetGoods.Where(i => i.Category.Name.Equals("Процесори")).OrderBy(i => i.price);
-                    else if (sort == "priceDown")
-                        goods = this.goods.GetGoods.Where(i => i.Category.Name.Equals("Процесори")).OrderByDescending(i => i.price);
-                    else
-                        goods = this.goods.GetGoods.Where(i => i.Category.Name.Equals("Процесори")).OrderBy(i => i.id);
+                    goods = unitOfWork.Goods.GetGoods1.Where(i => i.Category.id == 3);
                 }
-                
-                currCategory = category;
+
+                if(sort != null)
+                    Sort(goods, sort);
             }
 
 
             var goodsObj = new GoodsListViewModel
             {
                 AllGoods = goods,
-                categories = currCategory
+                categories = category
             };
 
-            if (currCategory == "Процесори")
+            if (category == "Процесори")
                 ViewBag.Title = "Процесори";
-            else if (currCategory == "Відеокарти")
+            else if (category == "Відеокарти")
                 ViewBag.Title = "Відеокарти";
             else
                 ViewBag.Title = "Головна";
 
-            ViewData["PriceSort"] = sort;
+            //ViewData["PriceSort"] = sort;
 
             return View(goodsObj);
+        }
+        private IQueryable<Goods> Sort(IQueryable<Goods> goods, string sort)
+        {
+
+            if (sort == "priceUp")
+                goods = goods.OrderBy(i => i.price);
+            else if (sort == "priceDown")
+                goods = goods.OrderByDescending(i => i.price);
+            else
+                goods = goods.OrderBy(i => i.id);
+
+            return goods;
         }
     }
 }

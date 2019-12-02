@@ -5,10 +5,20 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\js\" />
+    <Compile Remove="Views\OrderNoRegister\**" />
+    <Content Remove="Views\OrderNoRegister\**" />
+    <EmbeddedResource Remove="Views\OrderNoRegister\**" />
+    <None Remove="Views\OrderNoRegister\**" />
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\OrderNoRegisterController.cs" />
+    <Compile Remove="Interfaces\IOrders.cs" />
+    <Compile Remove="Repository\OrderRepository.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
     <None Include="wwwroot\dist\app.js" />
     <None Include="wwwroot\dist\polyfills.js" />
   </ItemGroup>

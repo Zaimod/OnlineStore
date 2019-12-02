@@ -11,6 +11,7 @@ using System.Security.Claims;
 
 namespace ProjectApp.Controllers
 {
+    
     public class HomeController : Controller
     {
         private readonly IGoods goodsRepository;
@@ -20,6 +21,11 @@ namespace ProjectApp.Controllers
         {
             //this.shopCart = shopCart;
             this.goodsRepository = goodsRepository;
+        }
+        [Authorize(Roles = "admin")]
+        public IActionResult Index(string x)
+        {
+            return View();
         }
         [Route("Home/Top")]
         [Authorize(Roles = "admin, user")]

@@ -8,7 +8,7 @@ namespace ProjectApp.ViewsModels
 {
     public class GoodsListViewModel
     {
-        public IEnumerable<Goods> AllGoods { get; set; }
+        public IQueryable<Goods> AllGoods { get; set; }
 
         public string categories { get; set; }
     }

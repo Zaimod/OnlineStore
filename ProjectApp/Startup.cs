@@ -33,8 +33,11 @@ namespace ProjectApp
             services.AddDbContext<Context>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddTransient<ICategory, CategoryRepository>();
             services.AddTransient<IGoods, GoodsRepository>();
-            services.AddTransient<IOrders, OrderRepository>();
+            //services.AddTransient<IOrders, OrderRepository>();
             services.AddTransient<IDescription, DescriptionRepository>();
+            services.AddTransient<IMyCabinet, MyCabinetRepository>();
+            services.AddTransient<IOrderRegister, OrderRegisterRepository>();
+
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped(sp => ShopCart.GetCart(sp));
 

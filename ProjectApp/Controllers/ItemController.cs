@@ -7,51 +7,43 @@ using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.AspNetCore.Mvc;
 using ProjectApp.Interfaces;
 using ProjectApp.Models;
+using ProjectApp.Repository.UnitOfWork;
 using ProjectApp.ViewsModels;
 
 namespace ProjectApp.Controllers
 {
     public class ItemController : Controller
     {
-        //private readonly IGoods goods;
-        string category = null;
-        private IGoods goods;
-        private IDescription description;
-         //private Context goods1;
-        public ItemController(IGoods goods, IDescription description)
+        UnitOfWork_Item UnitOfWork;
+        public ItemController(Context context)
         {
-            this.goods = goods;
-            this.description = description;
+            UnitOfWork = new UnitOfWork_Item(context);
         }
         [Route("Item")]
         [Route("Item/{name}")]
         public IActionResult Index(string name)
         {
             IEnumerable<Goods> goodsObj = null;
-            goodsObj = goods.GetGoods.Where(i => i.name == name);
+            FullDescription_Video description_Videos = null;
+            Description description = null;
 
-            Goods obj = goodsObj.FirstOrDefault();
+            goodsObj = UnitOfWork.Goods.GetGoods.Where(i => i.name == name);
+            description_Videos = UnitOfWork.Description.fullDescription_Video(goodsObj.FirstOrDefault().id);
+            description = UnitOfWork.Description.description(goodsObj.FirstOrDefault().id);
 
             var ItemObj = new ItemView
             {
-                item = obj,
-                Items = goodsObj
+                item = goodsObj.FirstOrDefault(),
+                video_desk = description_Videos,
+                description = description
             };
-
-            if (obj.Category.Name == "Процесори")
-                category = "Процесор";
-            else if (obj.Category.Name == "Відеокарти")
-                category = "Відеокарта";
-            ViewBag.Category1 = category;
-            ViewBag.Title1 = obj.Category.Name + "|" + obj.name.Replace(" ", string.Empty);
-
-            if (obj.isAvailable == true)
-                ViewBag.isAvailable = "В наявності";
-            else
-                ViewBag.isAvailable = "Немає в наявності";
             
-            ViewBag.Desc = description.description(obj.id).desc.ToString();
-            ViewBag.Maker = description.fullDescription_Video(1).Maker.ToString();
+            if (goodsObj.FirstOrDefault().Category.id == 2)
+                ViewBag.Category1 = goodsObj.FirstOrDefault().Category.Name;
+            else if (goodsObj.FirstOrDefault().Category.id == 3)
+                ViewBag.Category1 = goodsObj.FirstOrDefault().Category.Name;
+
+            ViewBag.Title1 = goodsObj.FirstOrDefault().Category.Name + "|" + goodsObj.FirstOrDefault().name.Replace(" ", string.Empty);            
             return View(ItemObj);
         }
         

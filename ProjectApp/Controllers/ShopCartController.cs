@@ -15,21 +15,30 @@ namespace ProjectApp.Controllers
     {
         private readonly IGoods goodsRepository;
         private readonly ShopCart shopCart;
-
+        ShopCartViewModel obj;
         public ShopCartController(IGoods goodsRepository, ShopCart shopCart)
         {
             this.shopCart = shopCart;
             this.goodsRepository = goodsRepository;
         }
-
         public IActionResult Index()
         {
+
             if (User.Identity.IsAuthenticated)
             {
                 var items = shopCart.GetShopItems();
                 shopCart.listShopItems = items;
 
-                var obj = new ShopCartViewModel { shopCart = shopCart };
+                double Price = 0;
+                foreach (var item in shopCart.listShopItems)
+                {
+                    Price += item.price;
+                }
+                obj = new ShopCartViewModel 
+                { 
+                    shopCart = shopCart,
+                    Price = Price
+                };
 
                 return View(obj);
             }

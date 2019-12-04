@@ -9,9 +9,7 @@ namespace ProjectApp.ViewsModels
     public class ItemView
     {
         public Goods item { get; set; }
-        public IEnumerable<Goods> Items { get; set; }
-
-        public string desccccc { get; set; }
+        public FullDescription_Video video_desk { get; set; }
         public Description description { get; set; }
     }
 }

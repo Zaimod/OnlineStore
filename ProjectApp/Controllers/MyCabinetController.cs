@@ -24,7 +24,7 @@ namespace ProjectApp.Controllers
             MyCabinet = new UnitOfWork_MyCabinet(context);
             //this.goodsRepository = goodsRepository;
         }
-        public IActionResult Index()
+        public IActionResult Index(string del = "0")
         {
             var items = shopCart.GetShopItems();
             shopCart.listShopItems = items;
@@ -39,7 +39,12 @@ namespace ProjectApp.Controllers
                 ShopCarts = shopCart,
                 Price = Price
             };
-            
+            if (del == "1")
+            {
+                shopCart.listShopItems.Clear();
+                objMyCabinet.ShopCarts.listShopItems.Clear();
+                objMyCabinet.Price = 0;
+            }
             return View(objMyCabinet);
         }
         public async Task<IActionResult> OnPostDeleteAsync(int id)

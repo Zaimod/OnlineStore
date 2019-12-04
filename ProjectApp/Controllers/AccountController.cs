@@ -10,6 +10,10 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 
 namespace ProjectApp.Controllers
 {
@@ -45,12 +49,14 @@ namespace ProjectApp.Controllers
                 {
                     await Authenticate(user); // аутентификация
 
+                     
                     return RedirectToAction("Index", "Goods");
                 }
                 ModelState.AddModelError("", "Неправильний email або пароль!");
             }
             return View(model);
         }
+
         [HttpGet]
         public IActionResult Register()
         {
@@ -92,6 +98,9 @@ namespace ProjectApp.Controllers
             return View(model);
         }
 
+        
+
+
         private async Task Authenticate(User user)
         {
             var claims = new List<Claim>
@@ -102,7 +111,17 @@ namespace ProjectApp.Controllers
             ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
         }
-
+        /*private ClaimsIdentity Authenticate1(User user)
+        {
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimsIdentity.DefaultNameClaimType, user.email),
+                new Claim(ClaimsIdentity.DefaultRoleClaimType, user.role?.Name)
+            };
+            ClaimsIdentity id = new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
+            return id;
+        }
+        */
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> LogOff()
@@ -112,10 +131,5 @@ namespace ProjectApp.Controllers
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Index", "Goods");
         }
-        /*public async Task<IActionResult> Logout()
-        {
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToAction("Login", "Account");
-        }*/
     }
 }

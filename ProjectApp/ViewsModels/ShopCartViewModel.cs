@@ -9,5 +9,7 @@ namespace ProjectApp.ViewsModels
     public class ShopCartViewModel
     {
         public ShopCart shopCart { get; set; }
+
+        public double Price { get; set; }
     }
 }

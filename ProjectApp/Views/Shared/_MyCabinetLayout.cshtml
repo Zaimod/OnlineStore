@@ -7,42 +7,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>@ViewBag.Title1</title>
 
-    <link href="~/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <link href="~/css/shop-homepage.css" rel="stylesheet" />
+
     <link rel="stylesheet" media="screen" href="~/css/vendor.min.css">
     <link rel="stylesheet" media="screen" id="main-styles" href="~/css/theme.min.css">
     <link rel="stylesheet" media="screen" href="~/css/customizer.min.css">
+
 </head>
 <body>
     <div class="offcanvas offcanvas-reverse" id="offcanvas-cart">
         <div class="offcanvas-header d-flex justify-content-between align-items-center">
-            <h3 class="offcanvas-title">Кошик</h3>
+            <h3 class="offcanvas-title">Ваш кошик</h3>
             <button class="close" type="button" data-dismiss="offcanvas" aria-label="Close"><span aria-hidden="true">×</span></button>
         </div>
-        <div class="offcanvas-body">
-            <div class="offcanvas-body-inner">
-                <div class="text-right"><a class="text-danger btn-sm pr-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x mr-1" style="width: .85rem; height: .85rem;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>Очистити кошик</a></div>
-                <div class="widget widget-featured-entries pt-3">
-                    @{
-                        foreach (var item in Model.ShopCarts.listShopItems)
-                        {
-                        <div class="media">
-                            <div class="featured-entry-thumb mr-3"><a asp-controller="Item/" asp-action="Index" asp-route-name="@item.Goods.name"><img src="@Url.Content("~/img/" + item.Goods.img)" width="64" alt="@item.Goods.name"></a><span class="item-remove-btn"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span></div>
-                            <div class="media-body">
-                                <h6 class="featured-entry-title"><a asp-controller="Item/" asp-action="Index" asp-route-name="@item.Goods.name">@item.Goods.name</a></h6>
-                                <p class="featured-entry-meta">@item.Goods.price.ToString("C")</p>
-                                
-                            </div>
-                        </div>
+        @if (Model.ShopCarts.listShopItems.Count != 0)
+        {
+            <div class="offcanvas-body">
+                <div class="offcanvas-body-inner">
+                    <div class="text-right"><a asp-route-del="1">Очистити кошик</a></div>
+                    <div class="widget widget-featured-entries pt-3">
+                        @{
+                            foreach (var item in Model.ShopCarts.listShopItems)
+                            {
+                                <div class="media">
+                                    <div class="featured-entry-thumb mr-3"><a asp-controller="Item/" asp-action="Index" asp-route-name="@item.Goods.name"><img src="@Url.Content("~/img/" + item.Goods.img)" width="64" alt="@item.Goods.name"></a><span class="item-remove-btn"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span></div>
+                                    <div class="media-body">
+                                        <h6 class="featured-entry-title"><a asp-controller="Item/" asp-action="Index" asp-route-name="@item.Goods.name">@item.Goods.name</a></h6>
+                                        <p class="featured-entry-meta">@item.Goods.price.ToString("C")</p>
+
+                                    </div>
+                                </div>
+                            }
                         }
-                    }
-                    <hr>
-                    <div class="d-flex justify-content-between align-items-center py-3">
-                        <div class="font-size-sm"> <span class="mr-2">Разом:</span><span class="font-weight-semibold text-dark">@Model.Price.ToString("C")</span></div><a class="btn btn-outline-secondary btn-sm" href="cart.html">Редагувати кошик<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right mr-n2"><polyline points="9 18 15 12 9 6"></polyline></svg></a>
-                    </div><a class="btn btn-primary btn-sm btn-block" href="checkout-details.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-credit-card mr-1"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>Оформити замовлення</a>
+                        <hr>
+                        <div class="d-flex justify-content-between align-items-center py-3">
+                            <div class="font-size-sm"> <span class="mr-2">Разом:</span><span class="font-weight-semibold text-dark">@Model.Price.ToString("C")</span></div><a class="btn btn-outline-secondary btn-sm" href="cart.html">Редагувати кошик<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right mr-n2"><polyline points="9 18 15 12 9 6"></polyline></svg></a>
+                        </div><a class="btn btn-primary btn-sm btn-block" href="checkout-details.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-credit-card mr-1"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>Оформити замовлення</a>
+                    </div>
                 </div>
             </div>
-        </div>
+        }
+        else
+        {
+            <div class="offcanvas-body">
+                <div class="offcanvas-body-inner">
+                    <div class="widget widget-featured-entries pt-3">
+                        <h3>Порожній!</h3>
+                    </div>
+                </div>
+            </div>
+        }
     </div>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div class="container">

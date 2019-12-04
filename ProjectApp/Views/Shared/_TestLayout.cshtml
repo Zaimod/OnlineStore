@@ -1,14 +1,124 @@
 ﻿<!DOCTYPE html>
-
+@model ShopCartViewModel
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <title>@ViewBag.Title</title>
+ 
+    <link rel="stylesheet" media="screen" href="~/css/vendor.min.css">
+    <link rel="stylesheet" media="screen" id="main-styles" href="~/css/theme.min.css">
+    <link rel="stylesheet" media="screen" href="~/css/customizer.min.css">
+
 </head>
 <body>
-    <div>
-        <p>erhreh</p>
-        @RenderBody()
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" asp-controller="Goods/List" asp-action="Index">ShopHW</a>
+            <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse" id="navbarResponsive" style="">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Goods/List" asp-action="index">Головна</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" asp-controller="ShopCart" asp-action="Index">Кошик</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Про нас</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Контакти</a>
+                    </li>
+                </ul>
+                @if (User.Identity.IsAuthenticated)
+                {
+
+                    <ul class="navbar-nav ml-auto">
+                        <li class=nav-item>
+                            <div class="btn-group">
+                                <form method="post" asp-controller="Account" asp-action="LogOff">
+                                    <button type="submit" class="btn btn-dark">Вихід</button>
+                                </form>
+
+                                <form method="post" asp-controller="MyCabinet" asp-action="Index">
+                                    <button type="submit" class="btn btn-dark">Мій кабінет</button>
+                                </form>
+                            </div>
+                        </li>
+                    </ul>
+                }
+                else
+                {
+
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Account" asp-action="Register">Реєстрація</a>
+                        </li>
+                        <li class=nav-item>
+                            <a class="nav-link" asp-controller="Account" asp-action="Login">Ввійти</a>
+                        </li>
+                    </ul>
+                }
+            </div>
+        </div>
+    </nav>
+    <div class="page-title-wrapper" aria-label="Page title">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="mt-n1 mr-1"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></li>
+                    <li class="breadcrumb-item">
+                        <a asp-controller="Goods/List" asp-action="Index">Головна</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a asp-controller="ShopCart" asp-action="Index">Кошик</a>
+                    </li>
+                </ol>
+            </nav>
+            <h1 class="page-title">Ваш кошик</h1><span class="d-block mt-2 text-muted"></span>
+        </div>
     </div>
+    @if (Model.shopCart.listShopItems.Count != 0)
+    {
+    <div class="container pb-5 mt-n2 mt-md-n3">
+        <div class="row">
+            <div class="col-xl-9 col-md-8">
+                <h2 class="h6 d-flex flex-wrap justify-content-between align-items-center px-4 py-3 bg-secondary"><span>Товар</span><a class="font-size-sm" href="shop-style1-ls.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left" style="width: 1rem; height: 1rem;"><polyline points="15 18 9 12 15 6"></polyline></svg>Назад</a></h2>
+                <!-- Item-->
+                <!-- Item-->
+                @RenderBody()
+                <!-- Item-->
+                <!-- Item-->
+            </div>
+            <!-- Sidebar-->
+            <div class="col-xl-3 col-md-4 pt-3 pt-md-0">
+                <h2 class="h6 px-4 py-3 bg-secondary text-center">Разом</h2>
+                <div class="h3 font-weight-semibold text-center py-3">@Model.Price грн</div>
+                <hr>
+                <h3 class="h6 pt-4 font-weight-semibold"><span class="badge badge-success mr-2">Note</span>Залишити коментарій</h3>
+                <textarea class="form-control mb-3" id="order-comments" rows="5"></textarea><a class="btn btn-primary btn-block" asp-controller="ShopCart" asp-action="test"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-credit-card mr-2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>Замовити</a>
+            </div>
+        </div>
+    </div>
+    }
+    else
+    {
+        <h3>Порожній</h3>
+        @RenderBody()
+    }
+    <footer class="py-5 bg-dark">
+        <p class="m-0 text-center text-white">© 2019 Всі права захищені</p>
+    </footer>
+    <a class="scroll-to-top-btn show" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up scroll-to-top-btn-icon"><polyline points="18 15 12 9 6 15"></polyline></svg></a>
+
+    <div class="ms-customizer-backdrop">
+        <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status"></div>
+    </div>
+
+    <script src="~/js/vendor.min.js"></script>
+    <script src="~/js/theme.min.js"></script>
+    <script src="~/js/customizer.min.js"></script>
 </body>
 </html>

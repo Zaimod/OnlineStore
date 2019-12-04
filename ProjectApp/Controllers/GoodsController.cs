@@ -8,7 +8,10 @@ using ProjectApp.Interfaces;
 using ProjectApp.Models;
 using ProjectApp.Repository.UnitOfWork;
 using ProjectApp.ViewsModels;
- 
+using PagedList.Mvc;
+using PagedList;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ProjectApp.Controllers
 {
@@ -24,10 +27,11 @@ namespace ProjectApp.Controllers
 
         [Route("Goods/List")]
         [Route("Goods/List/{category}")]
-        public IActionResult Index(string category, string sort)
+        public async Task<IActionResult> Index(string category, string sort,  string name, int? categories1, double price_min = 1, double price_max = 100000, int page = 1)
         {
+            int pageSize = 3;
 
-            IQueryable<Goods> goods = unitOfWork.Goods.GetGoods1;
+            IQueryable<Goods> goods = unitOfWork.Goods.GetGoods1.Include(i => i.Category);
 
             if (string.IsNullOrEmpty(category))
             {
@@ -49,13 +53,39 @@ namespace ProjectApp.Controllers
                     Sort(goods, sort);
             }
 
+            if (categories1 != null && categories1 != 0)
+            {
+                goods = goods.Where(p => p.id_category == categories1);
+            }
+            if (!String.IsNullOrEmpty(name))
+            {
+                goods = goods.Where(p => p.name.Contains(name));
+            }
 
+            goods = goods.Where(i => i.price >= price_min && i.price <= price_max);
+
+            List<Category> categories = unitOfWork.Category.GetCategories.ToList();
+            categories.Insert(0, new Category { Name = "Все", id = 0});
+
+            //IEnumerable<Goods> goods1 = unitOfWork.Goods.GetGoods.ToList().Where(i => i.price >= price_min && i.price <= price_max);
+            
+            var count = await goods.CountAsync();
+            var items = await goods.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
+
+            PageViewModel pageViewModel = new PageViewModel(count, page, pageSize);
             var goodsObj = new GoodsListViewModel
             {
-                AllGoods = goods,
-                categories = category
+                AllGoods = items.AsQueryable(),
+                categories = category,
+                PageViewModel = pageViewModel,
+                Name = name,
+                categories1 = new SelectList(categories, "id", "Name"),
+                cat = categories1,
+                price_min = price_min,
+                price_max = price_max
+                
             };
-
+            
             if (category == "Процесори")
                 ViewBag.Title = "Процесори";
             else if (category == "Відеокарти")

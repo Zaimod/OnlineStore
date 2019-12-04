@@ -16,5 +16,10 @@ namespace ProjectApp.Models
         public int id_photo { get; set; }
         public CategoryPhoto CategoryPhoto { get; set; }
         public List<Goods> Goods { get; set;  }
+
+        public Category()
+        {
+            Goods = new List<Goods>();
+        }
     }
 }

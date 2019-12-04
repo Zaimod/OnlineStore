@@ -2,10 +2,111 @@
 @{
     Layout = "_ItemLayout";
 }
-@{
-  
-    foreach (Goods item in Model.Items)
-    {
-        @Html.Partial("ItemObj", item);
-    }
-}
+
+<div class="card h-100">
+    <img class="figure-img" src="@Url.Content("~/img/" + Model.item.img)" height="400" />
+    <div class="card-body">
+        <h4 class="card-title">@ViewBag.Category1 @Model.item.name</h4>
+        @if (@Model.item.isAvailable) { <p>В наявності</p> } else { <p>Немає в наявності</p> }
+        <h4>@Model.item.price.ToString() грн</h4>
+        <a class="btn btn-primary" role="button" asp-controller="ShopCart" asp-action="AddToCart" asp-route-id="@Model.item.id">Добавити в кошик</a>
+    </div>
+    <div class="container">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#home">Опис</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#menu1">Характеристики</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#menu2">Інформація для замовлення</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#menu3">Відгуки</a>
+            </li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div id="home" class="container tab-pane active">
+                <br>
+                <p>@Model.description.desc</p>
+            </div>
+            <div id="menu1" class="container tab-pane fade">
+                <br>
+                <table class="table table-striped">
+                    <tbody>
+                        <tr>
+                            <td>Виробник</td>
+                            <td>@Model.video_desk.Maker</td>
+                        </tr>
+                        <tr>
+                            <td>Призначення</td>
+                            <td>@Model.video_desk.Pruznachennia</td>
+                        </tr>
+                        <tr>
+                            <td>Обсяг відеопам'яті</td>
+                            <td>@Model.video_desk.Obsyag_Videopamyati ГБ</td>
+                        </tr>
+                        <tr>
+                            <td>Тип відеопам'яті</td>
+                            <td>@Model.video_desk.Tip_Videopamyati</td>
+                        </tr>
+                        <tr>
+                            <td>Графічний чіпсет</td>
+                            <td>@Model.video_desk.Graph_chipset</td>
+                        </tr>
+                        <tr>
+                            <td>Розрядність шини пам'яті</td>
+                            <td>@Model.video_desk.Rozrydnisct Біт</td>
+                        </tr>
+                        <tr>
+                            <td>Частота процесора</td>
+                            <td>@Model.video_desk.Chastota_proc MHz</td>
+                        </tr>
+                        <tr>
+                            <td>Частота відеопам'яті</td>
+                            <td>@Model.video_desk.Chastota_video MHz</td>
+                        </tr>
+                        <tr>
+                            <td>Тип підключення</td>
+                            <td>@Model.video_desk.Tip_pidkluchenna</td>
+                        </tr>
+                        <tr>
+                            <td>Інтерфейси</td>
+                            @if (Model.video_desk.hdmi && Model.video_desk.display_port && Model.video_desk.dvi)
+                            {
+                                <td>HDMI, DisplayPort, DVI</td>
+                            }                         
+                        </tr>
+                        <tr>
+                            <td>Довжина</td>
+                            <td>@Model.video_desk.length мм</td>
+                        </tr>
+                        <tr>
+                            <td>Стан</td>
+                            @if (Model.video_desk.Stan)
+                            {
+                                <td>Новий</td>
+                            }
+                            else
+                            {
+                                <td>Б/У</td>
+                            }
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div id="menu2" class="container tab-pane fade">
+                <br>
+                <p>Ціна: @Model.item.price.ToString() грн</p>
+            </div>
+            <div id="menu3" class="container tab-pane fade">
+                <br>
+                <a class="btn btn-outline-primary" role="button" href="#">Додати відгук</a>
+            </div>
+        </div>
+    </div>
+</div>

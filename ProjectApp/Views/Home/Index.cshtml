@@ -1,8 +1,28 @@
 ﻿@model HomeViewModel
-<div class="row mt-5 mb-2">
-    @{ 
-        foreach (Goods item in Model.favGoods){
-            @Html.Partial("AllGoods", item);
+    <div class="row mt-5 mb-2">
+        @{
+            foreach (Goods item in Model.favGoods)
+            {
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card h-100 rounded">
+                        @ViewBag.gt
+                        <a asp-controller="Item/" asp-action="Index" asp-route-name="@item.name"><img class="card-img-top" src="@Url.Content("~/img/" + item.img)" height="150" /></a>
+                        <div class="card-body">
+                            <h4 class="card-title">
+                                <a asp-controller="Item/" asp-action="Index" asp-route-name="@item.name">@item.name</a>
+                            </h4>
+
+
+                            <h5>@item.price.ToString() грн</h5>
+                            <p class="card-text">Lorem Ipsum!</p>
+                            <a class="btn btn-dark d-flex justify-content-center" role="button" asp-controller="Item/" asp-action="Index" asp-route-name="@item.name">Детальніше</a>
+                            <a class="btn btn-secondary d-flex justify-content-center" role="button" asp-controller="ShopCart" asp-action="AddToCart" asp-route-id="@item.id">Добавити в кошик</a>
+
+                        </div>
+                    </div>
+                </div>
+
+            }
         }
-    }
-</div>
+    </div>
+@section Footer{ }

@@ -1,4 +1,5 @@
-﻿@model GoodsListViewModel
+﻿
+
 <div class="btn-group dropleft float-right">
     <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         Сортування
@@ -18,3 +19,26 @@
 
     }
 </div>
+@model GoodsListViewModel
+@section Footer {
+    <h3 class="my-4">Фільтр</h3>
+    <form method="get">
+        <div class="form-group">
+            <label class="control-label">Імя: </label>
+            @Html.TextBox("name", Model.Name, htmlAttributes: new { @class = "form-control" })
+
+            <label class="control-label">Категорія: </label>
+            @Html.DropDownList("categories1", Model.categories1 as SelectList,
+                    htmlAttributes: new { @class = "form-control" })
+
+            <label class="control-label">Ціна: </label>
+            <p>Від</p>
+            @Html.TextBox("price_min", Model.price_min, htmlAttributes: new { @class = "form-control" })
+            <p>До</p>
+            @Html.TextBox("price_max", Model.price_max, htmlAttributes: new { @class = "form-control" })
+            <br />
+
+            <input type="submit" value="Застосувати" class="btn btn-dark btn-block btn-lg" />
+        </div>
+    </form>
+}

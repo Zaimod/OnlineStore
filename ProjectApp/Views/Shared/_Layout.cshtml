@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿
+ 
+<!DOCTYPE html>
 
 <html>
 <head>
@@ -13,7 +15,7 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div class="container">
-            <a class="navbar-brand" asp-controller="Home/Top" asp-action="Index">ShopHW</a>
+            <a class="navbar-brand" asp-controller="Goods/List" asp-action="Index">ShopHW</a>
             <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -34,21 +36,17 @@
                 </ul>
                 @if (User.Identity.IsAuthenticated)
                 {
-                   
+
                     <ul class="navbar-nav ml-auto">
-
                         <li class=nav-item>
-
                             <div class="btn-group">
                                 <form method="post" asp-controller="Account" asp-action="LogOff">
-                                    <button type="submit" class="btn btn-secondary">Вихід</button>
+                                    <button type="submit" class="btn btn-dark">Вихід</button>
                                 </form>
-                                <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span class="sr-only">Toggle Dropdown</span>
-                                </button>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" asp-controller="MyCabinet" asp-action="Index">Мій кабінет</a>
-                                </div>
+                                
+                                <form method="post" asp-controller="MyCabinet" asp-action="Index">
+                                    <button type="submit" class="btn btn-dark">Мій кабінет</button>
+                                </form>
                             </div>
                         </li>
                     </ul>
@@ -69,20 +67,13 @@
         </div>
     </nav>
 
-     
+
 
     <div class="container">
 
-        <div class="row">
-
+        <div class="row">          
             <div class="col-lg-3">
-
-                <h1 class="my-4">Категорії</h1>
-                <div class="list-group">
-                    <a class="list-group-item" asp-controller="Goods/List/Процесори" asp-action="Index">Процесори</a>
-                    <a class="list-group-item" asp-controller="Goods/List/Відеокарти" asp-action="Index">Відеокарти</a>
-                </div>
-
+                <footer>@RenderSection("Footer")</footer>     
             </div>
             <!-- /.col-lg-3 -->
 
@@ -115,10 +106,26 @@
                     </a>
                 </div>
 
-                
+
                 @RenderBody()
                 <!-- /.row -->
+                <nav aria-label="Page Navigation">
+                    <ul class="pagination justify-content-center">
+                        @if (Model.PageViewModel.HasPreviousPage)
+                        {
+                            <li class="page-item">
 
+                                <a asp-action="Index" asp-route-page="@(Model.PageViewModel.PageNumber - 1)" class="page-link"><i class="glyphicon glyphicon-chevron-left"></i>Назад</a>
+                            </li>
+                        }
+                        @if (Model.PageViewModel.HasNextPage)
+                        {
+                            <li class="page-item">
+                                <a asp-action="Index" asp-route-page="@(Model.PageViewModel.PageNumber + 1)" class="page-link">Вперед<i class="glyphicon glyphicon-chevron-right"></i></a>
+                            </li>
+                        }
+                    </ul>
+                </nav>
             </div>
             <!-- /.col-lg-9 -->
 
@@ -126,11 +133,11 @@
         <!-- /.row -->
 
     </div>
-
+    
     <footer class="py-5 bg-dark">
         <p class="m-0 text-center text-white">© 2019 Всі права захищені</p>
     </footer>
-   
+
     <script src="~/js/bootstrap.min.js"></script>
     <script src="~/css/jquery.min.js"></script>
     <script src="~/css/bootstrap.bundle.min.js"></script>

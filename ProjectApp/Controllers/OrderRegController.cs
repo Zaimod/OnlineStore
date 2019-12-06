@@ -28,11 +28,6 @@ namespace ProjectApp.Controllers
             shopCart.listShopItems = shopCart.GetShopItems();
             var items = shopCart.listShopItems;
             OrderDetailRegister order1 = null;
-            if (shopCart.listShopItems.Count == 0)
-            {
-                ModelState.AddModelError("", "Корзина порожня!");
-            }
-
             if (ModelState.IsValid)
             {
                 User user = myCabinet.Cabinet.GetUser(User.Identity.Name);

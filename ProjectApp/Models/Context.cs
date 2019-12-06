@@ -33,6 +33,8 @@ namespace ProjectApp.Models
         public DbSet<Description> Descriptions { get; set; }
         public DbSet<FullDescription_Video> FullDescription_Video { get; set; }
 
+
+        public DbSet<StatusOrder> statusOrders { get; set; }
         public Context()
         {
 
@@ -87,6 +89,10 @@ namespace ProjectApp.Models
                 .WithMany(t => t.AllDescript)
                 .HasForeignKey(p => p.id_goods);
 
+         
+              
+                
+
             //Опис
             modelBuilder
                 .Entity<Goods>()
@@ -101,6 +107,12 @@ namespace ProjectApp.Models
                .WithOne(t => t.Goods)
                .HasForeignKey<FullDescription_Video>(p => p.id_goods);
 
+            modelBuilder
+                .Entity<OrderDetailRegister>()
+                .HasOne(p => p.statusOrder)
+                .WithOne(t => t.OrderDetailRegister)
+                .HasForeignKey<StatusOrder>(t => t.id_orderDetail);
+                
 
             modelBuilder
                 .Entity<AllDescript>()

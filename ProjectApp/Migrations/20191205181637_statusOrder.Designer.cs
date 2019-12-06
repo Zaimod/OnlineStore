@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjectApp.Models;
 
 namespace ProjectApp.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20191205181637_statusOrder")]
+    partial class statusOrder
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -317,8 +319,7 @@ namespace ProjectApp.Migrations
 
                     b.HasKey("id");
 
-                    b.HasIndex("GoodsID")
-                        .IsUnique();
+                    b.HasIndex("GoodsID");
 
                     b.HasIndex("UserID");
 
@@ -428,8 +429,6 @@ namespace ProjectApp.Migrations
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Status");
 
                     b.Property<int>("id_orderDetail");
 
@@ -581,8 +580,8 @@ namespace ProjectApp.Migrations
             modelBuilder.Entity("ProjectApp.Models.OrderDetailRegister", b =>
                 {
                     b.HasOne("ProjectApp.Models.Goods", "Goods")
-                        .WithOne("OrderDetailRegister")
-                        .HasForeignKey("ProjectApp.Models.OrderDetailRegister", "GoodsID")
+                        .WithMany()
+                        .HasForeignKey("GoodsID")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("ProjectApp.Models.User", "User")

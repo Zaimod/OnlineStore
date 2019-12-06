@@ -46,6 +46,20 @@ namespace ProjectApp.Models
             });
             context.SaveChanges();
         }
+
+        public void deleteItemCart(int id)
+        {
+
+            ShopCartItem t = new ShopCartItem { id = id };
+            context.Entry(t).State = EntityState.Deleted;
+            context.SaveChanges();
+        }
+
+        public void deleteItemAll()
+        {
+            context.shopCartItems.RemoveRange(context.shopCartItems);
+            context.SaveChanges();
+        }
         public List<ShopCartItem> GetShopItems()
         {
             return context.shopCartItems.Where(c => c.ShopCartId == ShopCartId).Include(s => s.Goods).ToList();

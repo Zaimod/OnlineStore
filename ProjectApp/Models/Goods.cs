@@ -32,7 +32,7 @@ namespace ProjectApp.Models
 
         public int id_img { get; set; }
         public List<GoodsPhotos> GoodsPhotos { get; set; }
-
+        public OrderDetailRegister OrderDetailRegister { get; set; }
         public string img { get; set; }
     }
 }

@@ -26,6 +26,7 @@ namespace ProjectApp.Controllers
         }
         public IActionResult Index(string del = "0")
         {
+            double sumPriceOrder = 0;
             var items = shopCart.GetShopItems();
             shopCart.listShopItems = items;
             double Price = 0;
@@ -33,11 +34,22 @@ namespace ProjectApp.Controllers
             {
                 Price += item.price;
             }
+
+            List<OrderDetailRegister> ordersQuantity = context.orderDetailRegisters.Where(i => i.User.email == User.Identity.Name).ToList();
+            foreach (var item in ordersQuantity)
+            {
+                sumPriceOrder += item.price;
+            }
             User user = MyCabinet.Cabinet.GetUser(User.Identity.Name);
+            IQueryable<Goods> goods = context.Goods;
             objMyCabinet = new MyCabinetViewModel() {
                 user = user,
                 ShopCarts = shopCart,
-                Price = Price
+                Price = Price,
+                quantityOrders = ordersQuantity.Count(),
+                SumPriceOders = sumPriceOrder,
+                OrderDetailRegisters = ordersQuantity.AsQueryable(),
+                Goods = goods
             };
             if (del == "1")
             {
@@ -60,5 +72,7 @@ namespace ProjectApp.Controllers
 
             return RedirectToPage("Index");
         }
+
+
     }
 }

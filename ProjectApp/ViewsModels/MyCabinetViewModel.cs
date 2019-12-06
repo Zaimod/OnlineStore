@@ -12,5 +12,13 @@ namespace ProjectApp.ViewsModels
          
         public ShopCart ShopCarts { get; set; }
         public double Price { get; set; }
+
+        public int quantityOrders { get; set; }
+
+        public double SumPriceOders { get; set; }
+
+        public IQueryable<OrderDetailRegister> OrderDetailRegisters { get; set; }
+
+        public IQueryable<Goods> Goods { get; set; }
     }
 }

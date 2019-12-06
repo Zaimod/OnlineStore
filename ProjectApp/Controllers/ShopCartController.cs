@@ -46,6 +46,7 @@ namespace ProjectApp.Controllers
         }
         public IActionResult test()
         {
+
             return View();
         }
 
@@ -58,5 +59,16 @@ namespace ProjectApp.Controllers
             return RedirectToAction("Index", "Goods/List/{category}");
         }
 
+        public IActionResult deleteItemCart(int id)
+        {
+            shopCart.deleteItemCart(id);
+            return RedirectToAction("Index", "ShopCart");
+        }
+
+        public IActionResult deleteItemAll()
+        {
+            shopCart.deleteItemAll();
+            return RedirectToAction("Index", "MyCabinet");
+        }
     }
 }

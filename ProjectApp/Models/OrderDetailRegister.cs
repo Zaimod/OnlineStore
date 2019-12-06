@@ -18,5 +18,7 @@ namespace ProjectApp.Models
 
         public virtual User User { get; set; }
         public virtual Goods Goods { get; set; }
+
+        public StatusOrder statusOrder { get; set; }
     }
 }

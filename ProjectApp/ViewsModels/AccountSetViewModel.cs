@@ -1,15 +1,15 @@
-﻿using System;
+﻿using ProjectApp.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
-using ProjectApp.Models;
+
 namespace ProjectApp.ViewsModels
 {
-    public class MyCabinetViewModel
+    public class AccountSetViewModel
     {
         public User user { get; set; }
-         
+
         public ShopCart ShopCarts { get; set; }
         public double Price { get; set; }
 

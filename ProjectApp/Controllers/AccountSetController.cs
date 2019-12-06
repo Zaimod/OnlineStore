@@ -3,23 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using ProjectApp.Interfaces;
 using ProjectApp.Models;
 using ProjectApp.Repository.UnitOfWork;
 using ProjectApp.ViewsModels;
+
 namespace ProjectApp.Controllers
 {
-    public class MyCabinetController : Controller
+    public class AccountSetController : Controller
     {
         UnitOfWork_MyCabinet MyCabinet;
         ShopCart shopCart;
         Context context;
         MyCabinetViewModel objMyCabinet = null;
-        public MyCabinetController(Context context, IGoods goodsRepository, ShopCart shopCart)
+        public AccountSetController(Context context, IGoods goodsRepository, ShopCart shopCart)
         {
-            this.context = context;           
+            this.context = context;
             this.shopCart = shopCart;
             MyCabinet = new UnitOfWork_MyCabinet(context);
             //this.goodsRepository = goodsRepository;
@@ -42,7 +41,8 @@ namespace ProjectApp.Controllers
             }
             User user = MyCabinet.Cabinet.GetUser(User.Identity.Name);
             IQueryable<Goods> goods = context.Goods;
-            objMyCabinet = new MyCabinetViewModel() {
+            objMyCabinet = new MyCabinetViewModel()
+            {
                 user = user,
                 ShopCarts = shopCart,
                 Price = Price,
@@ -60,7 +60,6 @@ namespace ProjectApp.Controllers
             return View(objMyCabinet);
         }
 
-
         [HttpPost]
         public async Task<IActionResult> ChangeAccount(MyCabinetViewModel model)
         {
@@ -75,24 +74,23 @@ namespace ProjectApp.Controllers
                     phone = model.phone
                 };
                 await context.SaveChangesAsync();
+                return RedirectToAction("Index", "MyCabinet");
             }
-            
-            return View(model);
+
+            return RedirectToAction("Index", "Goods/List");
         }
         public async Task<IActionResult> OnPostDeleteAsync(int id)
         {
             var shopCartItem = await context.shopCartItems.FindAsync(id);
- 
+
             if (shopCartItem != null)
             {
                 context.shopCartItems.Remove(shopCartItem);
                 await context.SaveChangesAsync();
-                 
+
             }
 
             return RedirectToPage("Index");
         }
-
-
     }
 }

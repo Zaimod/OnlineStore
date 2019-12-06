@@ -66,15 +66,12 @@ namespace ProjectApp.Controllers
             if (model != null)
             {
                 User user = context.Users.Where(i => i.email == User.Identity.Name).FirstOrDefault();
-                user = new User
-                {
-                    first_name = model.first_name,
-                    last_name = model.last_name,
-                    email = model.email,
-                    phone = model.phone
-                };
+                user.first_name = model.first_name;
+                user.last_name = model.last_name;
+                user.phone = model.phone;
+                
                 await context.SaveChangesAsync();
-                return RedirectToAction("Index", "MyCabinet");
+                return RedirectToAction("Index", "AccountSet");
             }
 
             return RedirectToAction("Index", "Goods/List");

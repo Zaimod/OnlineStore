@@ -25,7 +25,7 @@
                         <form method="post" asp-controller="Account" asp-action="Login" asp-route-returnUrl="@Model.ReturnUrl" class="form-signin">
                             <div asp-validation-summary="ModelOnly"></div>
                             <div class="form-label-group">
-                                <input asp-for="email" type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+                                <input asp-for="email" type="email" id="inputEmail" class="form-control" placeholder="Email address" required>
                                 <label asp-for="email" for="inputEmail">Електронна пошта</label>
                                 <span asp-validation-for="email"></span>
                             </div>

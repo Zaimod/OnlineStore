@@ -177,11 +177,11 @@
                 <!-- Orders table-->
                 <h5 class="mb-4 pt-sm-3">Інформація про користувача</h5>
 
-                <form class="row" method="post" asp-controller="MyCabinet" asp-action="ChangeAccount">
+                <form class="row" method="post" asp-controller="AccountSet" asp-action="ChangeAccount">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label asp-for="first_name">Ім'я</label>
-                            <input asp-for="first_name" class="form-control" type="text" id="account-fn" value="@Model.user.first_name" required="">
+                            <label asp-for="first_name" for="Name">Ім'я</label>
+                            <input asp-for="first_name" class="form-control" type="text" id="Name" value="@Model.user.first_name" required="">
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -192,8 +192,8 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label asp-for="email" for="account-email">Електронна пошта</label>
-                            <input asp-for="email" class="form-control" type="email" id="account-email" value="@Model.user.email" disabled="">
+                            <label asp-for="email">Електронна пошта</label>
+                            <input asp-for="email" class="form-control" type="email" value="@Model.user.email" disabled>
                         </div>
                     </div>
                     <div class="col-md-6">

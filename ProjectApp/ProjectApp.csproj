@@ -15,6 +15,7 @@
     <Compile Remove="Controllers\OrderNoRegisterController.cs" />
     <Compile Remove="Interfaces\IOrders.cs" />
     <Compile Remove="Repository\OrderRepository.cs" />
+    <Compile Remove="ViewsModels\AccountSetViewModel.cs" />
   </ItemGroup>
 
   <ItemGroup>

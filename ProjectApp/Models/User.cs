@@ -30,5 +30,7 @@ namespace ProjectApp.Models
         public List<SelectedProd> selectedProds { get; set; }
         
         public List<OrderDetailRegister> orderDetailsRegisters { get; set; }
+
+        public AddressUser AddressUsers { get; set; }
     }
 }

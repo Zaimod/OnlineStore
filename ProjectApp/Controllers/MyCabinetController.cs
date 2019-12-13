@@ -79,6 +79,44 @@ namespace ProjectApp.Controllers
             
             return View(model);
         }
+
+
+        public IActionResult WishList(string del = "0")
+        {
+            double sumPriceOrder = 0;
+            var items = shopCart.GetShopItems();
+            shopCart.listShopItems = items;
+            double Price = 0;
+            foreach (var item in shopCart.listShopItems)
+            {
+                Price += item.price;
+            }
+
+            List<OrderDetailRegister> ordersQuantity = context.orderDetailRegisters.Where(i => i.User.email == User.Identity.Name).ToList();
+            foreach (var item in ordersQuantity)
+            {
+                sumPriceOrder += item.price;
+            }
+            User user = MyCabinet.Cabinet.GetUser(User.Identity.Name);
+            IQueryable<Goods> goods = context.Goods;
+            objMyCabinet = new MyCabinetViewModel()
+            {
+                user = user,
+                ShopCarts = shopCart,
+                Price = Price,
+                quantityOrders = ordersQuantity.Count(),
+                SumPriceOders = sumPriceOrder,
+                OrderDetailRegisters = ordersQuantity.AsQueryable(),
+                Goods = goods
+            };
+            if (del == "1")
+            {
+                shopCart.listShopItems.Clear();
+                objMyCabinet.ShopCarts.listShopItems.Clear();
+                objMyCabinet.Price = 0;
+            }
+            return View(objMyCabinet);
+        }
         public async Task<IActionResult> OnPostDeleteAsync(int id)
         {
             var shopCartItem = await context.shopCartItems.FindAsync(id);

@@ -1,0 +1,39 @@
+﻿@{
+    Layout = "_LayoutAccountSet";
+
+}
+@model MyCabinetViewModel
+@section ChangeAcc {
+    <form class="row" method="post" asp-controller="AccountSet" asp-action="Address">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="city" for="city">Місто</label>
+                <input asp-for="city" class="form-control" type="text" id="city" value="@Model.AddressUser.City">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="zip" for="account-zip">Поштовий індекс</label>
+                <input asp-for="zip" class="form-control" type="number" id="account-zip" value="@Model.AddressUser.ZiP">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="address1" for="account-address1">Адреса 1</label>
+                <input asp-for="address1" class="form-control" type="text" id="account-address1" value="@Model.AddressUser.Address1">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="address2" for="account-address2">Адреса 2</label>
+                <input asp-for="address2" class="form-control" type="text" id="account-address2" value="@Model.AddressUser.Adrress2">
+            </div>
+        </div>
+        <div class="col-12">
+            <hr class="mt-2 mb-3">
+            <div class="d-flex flex-wrap justify-content-between align-items-center">
+                <button class="btn btn-primary mt-3 mt-sm-0" type="submit" data-toggle="toast" data-target="#profile-toast">Зберегти зміни</button>
+            </div>
+        </div>
+    </form>
+}

@@ -35,6 +35,7 @@ namespace ProjectApp.Models
 
 
         public DbSet<StatusOrder> statusOrders { get; set; }
+        public DbSet<AddressUser> addressUsers { get; set; }
         public Context()
         {
 
@@ -89,8 +90,12 @@ namespace ProjectApp.Models
                 .WithMany(t => t.AllDescript)
                 .HasForeignKey(p => p.id_goods);
 
-         
-              
+
+            modelBuilder
+                .Entity<User>()
+                .HasOne(p => p.AddressUsers)
+                .WithOne(t => t.User)
+                .HasForeignKey<AddressUser>(p => p.user_id);
                 
 
             //Опис

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
@@ -21,6 +22,7 @@ namespace ProjectApp.ViewsModels
 
         public IQueryable<Goods> Goods { get; set; }
 
+        public AddressUser AddressUser { get; set; }
 
 
 
@@ -34,5 +36,21 @@ namespace ProjectApp.ViewsModels
         public string email { get; set; }
 
         public string phone { get; set; }
+
+        [DataType(DataType.Password)]
+        public string password { get; set; }
+
+        [DataType(DataType.Password)]
+        [Compare("password", ErrorMessage = "Паролі не співпадають")]
+        public string ConfirmPassword { get; set; }
+
+
+        public string city { get; set; }
+
+        public int zip { get; set; }
+
+        public string address1 { get; set; }
+
+        public string address2 { get; set; }
     }
 }

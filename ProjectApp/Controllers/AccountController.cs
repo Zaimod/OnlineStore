@@ -49,9 +49,9 @@ namespace ProjectApp.Controllers
                 {
                     await Authenticate(user); // аутентификация
 
-                     
+
                     return RedirectToAction("Index", "Goods");
-                }
+                    ;                }
                 ModelState.AddModelError("", "Неправильний email або пароль!");
             }
             return View(model);

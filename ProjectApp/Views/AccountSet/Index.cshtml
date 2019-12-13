@@ -2,3 +2,50 @@
     Layout = "_LayoutAccountSet";
 
 }
+@model MyCabinetViewModel
+@section ChangeAcc {
+    <form class="row" method="post" asp-controller="AccountSet" asp-action="ChangeAccount">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="first_name" for="Name">Ім'я</label>
+                <input asp-for="first_name" class="form-control" type="text" id="Name" value="@Model.user.first_name">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="last_name" for="account-ln">Прізвище</label>
+                <input asp-for="last_name" class="form-control" type="text" id="account-ln" value="@Model.user.last_name">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="email">Електронна пошта</label>
+                <input asp-for="email" class="form-control" type="email" value="@Model.user.email" disabled>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="phone" for="account-phone">Номер телефону</label>
+                <input asp-for="phone" class="form-control" type="text" id="account-phone" value="@Model.user.phone">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="password" for="account-pass">Новий пароль</label>
+                <input asp-for="password" class="form-control" type="password" id="account-pass">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="ConfirmPassword" for="account-confirm-pass">Підтвердити пароль</label>
+                <input asp-for="ConfirmPassword" class="form-control" type="password" id="account-confirm-pass">
+            </div>
+        </div>
+        <div class="col-12">
+            <hr class="mt-2 mb-3">
+            <div class="d-flex flex-wrap justify-content-between align-items-center">
+                <button class="btn btn-primary mt-3 mt-sm-0" type="submit" data-toggle="toast" data-target="#profile-toast">Зберегти зміни</button>
+            </div>
+        </div>
+    </form>
+}

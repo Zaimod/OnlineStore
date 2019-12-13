@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjectApp.Models;
 
 namespace ProjectApp.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20191210193334_address1")]
+    partial class address1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,7 +42,7 @@ namespace ProjectApp.Migrations
                     b.HasIndex("user_id")
                         .IsUnique();
 
-                    b.ToTable("addressUsers");
+                    b.ToTable("AddressUser");
                 });
 
             modelBuilder.Entity("ProjectApp.Models.AllDescript", b =>
@@ -497,7 +499,7 @@ namespace ProjectApp.Migrations
             modelBuilder.Entity("ProjectApp.Models.AddressUser", b =>
                 {
                     b.HasOne("ProjectApp.Models.User", "User")
-                        .WithOne("AddressUsers")
+                        .WithOne("addressUser")
                         .HasForeignKey("ProjectApp.Models.AddressUser", "user_id")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

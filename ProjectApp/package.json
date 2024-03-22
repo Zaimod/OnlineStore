@@ -18,7 +18,7 @@
     "typescript": "^3.5.0",
     "webpack": "4.33.0",
     "webpack-cli": "3.3.2",
-    "webpack-dev-middleware": "3.7.0",
+    "webpack-dev-middleware": "5.3.4",
     "webpack-hot-middleware": "2.25.0",
     "angular2-template-loader": "0.6.2",
     "awesome-typescript-loader": "5.2.1",
